@@ -1,6 +1,6 @@
 name:
-  DiscordMC
+  DiscordMCPluginWrapper
 version:
   1.0
 main:
-  tk.jlot.discordmc.DiscordMC
+  tk.jlot.discordmc.DiscordMCPluginWrapper

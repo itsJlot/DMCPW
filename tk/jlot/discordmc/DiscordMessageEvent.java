@@ -13,12 +13,12 @@ public class DiscordMessageEvent extends Event implements Cancellable
     private final String message;
     private String msg;
     private String username;
-    private String uid;
+    private long uid;
     private String guildID;
     private String channel;
     private boolean cancelled = false;
     private static HandlerList handlers = new HandlerList();
-    public DiscordMessageEvent(String guildID, String channel, String username, String uid, String message)
+    public DiscordMessageEvent(String guildID, String channel, String username, long uid, String message)
     {
         super();
         this.message = "";
@@ -47,7 +47,7 @@ public class DiscordMessageEvent extends Event implements Cancellable
         return handlers;
     }
     public String getMsg() {
-        return message;
+        return msg;
     }
 
     public void setMsg(String message) {
@@ -62,11 +62,11 @@ public class DiscordMessageEvent extends Event implements Cancellable
         this.username = username;
     }
 
-    public String getUid() {
+    public long getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(long uid) {
         this.uid = uid;
     }
 
@@ -84,5 +84,18 @@ public class DiscordMessageEvent extends Event implements Cancellable
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    @Override
+    public String toString() {
+        return "DiscordMessageEvent{" +
+                "message='" + message + '\'' +
+                ", msg='" + msg + '\'' +
+                ", username='" + username + '\'' +
+                ", uid='" + uid + '\'' +
+                ", guildID='" + guildID + '\'' +
+                ", channel='" + channel + '\'' +
+                ", cancelled=" + cancelled +
+                '}';
     }
 }

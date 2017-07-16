@@ -17,9 +17,9 @@ import java.util.List;
 public class DAPIWrap
 {
     public IDiscordClient cli;
-    PrintStream voidthis,sysOut = System.out,sysErr = System.err;
-    String guild = "175756109431308288";
-    String channel = "general";
+    private PrintStream voidthis,sysOut = System.out,sysErr = System.err;
+    private String guild = "175756109431308288";
+    private String channel = "general";
     public void setGuild(String loc)
     {
         guild = loc;
@@ -53,9 +53,7 @@ public class DAPIWrap
     {
         voidthis = new PrintStream(new OutputStream(){
             public void write(int b)
-            {
-                //NO-OP
-            }
+            {}
         });
         try
         {
@@ -86,18 +84,25 @@ public class DAPIWrap
             cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
                 @Override
                 public void handle(MessageReceivedEvent mre) {
-//                    s.callEvent(new DiscordMessageEvent(mre.getGuild().getStringID(),mre.getChannel().getName(),
-//                            mre.getAuthor().getName(),mre.getAuthor().getDiscriminator(),mre.getMessage().getContent()));
-                    System.out.println(mre.getChannel().getName());
+                    s.callEvent(new DiscordMessageEvent(mre.getGuild().getStringID(),mre.getChannel().getName(),
+                            mre.getAuthor().getName(),mre.getAuthor().getLongID(),mre.getMessage().getContent()));
+//                    System.out.println(mre.getChannel().getName());
                 }
             });
         }
     }
-    public void sendMessage(String guildID,String chat,String message)
+    public boolean banByID(long id) {
+        try {
+            getGuild(guild).banUser(id);
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+    }
+    public IGuild getGuild(String guildID)
     {
-
-        prints(false);
-        this.cli.changePlayingText("UHC");
         List<IGuild> guilds = this.cli.getGuilds();
 
         IGuild guild = null;
@@ -115,8 +120,15 @@ public class DAPIWrap
         if (guild == null) {
             prints(true);
             System.out.println("The specified guild id was not found, make sure the bot is on your server");
-            return;
         }
+        return guild;
+    }
+    public void sendMessage(String guildID,String chat,String message)
+    {
+
+        prints(false);
+        this.cli.changePlayingText("UHC");
+        IGuild guild = getGuild(guildID);
 
         IChannel c = guild.getChannelsByName(chat).get(0);
         c.sendMessage(message);
