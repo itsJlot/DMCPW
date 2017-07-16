@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Created by Jlot on 7/9/2017.
  * edited 7/9/2017
  */
-public class DiscordMC extends JavaPlugin implements Listener
+public class DiscordMC extends JavaPlugin// implements Listener
 {
 //    DAPIWrap dapi;
     @Override
