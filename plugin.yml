@@ -1,0 +1,6 @@
+name:
+  DiscordMC
+version:
+  1.0
+main:
+  tk.jlot.discordmc.DiscordMC
