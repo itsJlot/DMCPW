@@ -13,30 +13,24 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class DiscordMC extends JavaPlugin implements Listener
 {
-    DAPIWrap dapi;
-    @Override
-    public void onDisable()
-    {
-
-    }
+//    DAPIWrap dapi;
     @Override
     public void onEnable()
     {
-        getServer().getPluginManager().registerEvents(this,this);
-        dapi = new DAPIWrap("Your API Token",true,getServer().getPluginManager());
-        dapi.setChannel("general");
-        dapi.setGuild("263851622063538186");
+//        getServer().getPluginManager().registerEvents(this,this);
+//        dapi = new DAPIWrap("Your API Token",true,getServer().getPluginManager());
+//        dapi.setChannel("general");
+//        dapi.setGuild("263851622063538186");
     }
-    @EventHandler
-    public void onLogin(PlayerJoinEvent pje)
-    {
-        System.out.println(pje.getPlayer().getName() + " joined the server");
-        dapi.sendMessage(pje.getPlayer().getName() + " joined the server");
-    }
-    @EventHandler
-    public void whatDoIUseHereAsAnEventHandler(Event e)
-    {
-        if(e instanceof DiscordMessageEvent)
-            System.out.println(((DiscordMessageEvent) e).getMessage());
-    }
+//    @EventHandler
+//    public void onLogin(PlayerJoinEvent pje)
+//    {
+//        System.out.println(pje.getPlayer().getName() + " joined the server");
+//        dapi.sendMessage(pje.getPlayer().getName() + " joined the server");
+//    }
+//    @EventHandler
+//    public void onDiscordMessage(DiscordMessageEvent e)
+//    {
+//            System.out.println(e.getMsg());
+//    }
 }
