@@ -23,7 +23,7 @@ public class DiscordMC extends JavaPlugin implements Listener
     public void onEnable()
     {
         getServer().getPluginManager().registerEvents(this,this);
-        dapi = new DAPIWrap("MTg3MjY1OTM0NDY4MDU1MDQw.DERKkg.xjhS9YyOou9iSV5egMYBX-4g3pw",true,getServer().getPluginManager());
+        dapi = new DAPIWrap("Your API Token",true,getServer().getPluginManager());
         dapi.setChannel("general");
         dapi.setGuild("263851622063538186");
     }
