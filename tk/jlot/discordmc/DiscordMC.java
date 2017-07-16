@@ -1,5 +1,6 @@
 package tk.jlot.discordmc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,26 +12,39 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Created by Jlot on 7/9/2017.
  * edited 7/9/2017
  */
-public class DiscordMC extends JavaPlugin// implements Listener
+public class DiscordMC extends JavaPlugin
 {
-//    DAPIWrap dapi;
+    private static DAPIWrap dapi;
     @Override
     public void onEnable()
     {
-//        getServer().getPluginManager().registerEvents(this,this);
-//        dapi = new DAPIWrap("Your API Token",true,getServer().getPluginManager());
-//        dapi.setChannel("general");
-//        dapi.setGuild("263851622063538186");
+        String token = getConfig().getString("token");
+        String channel = getConfig().getString("channel");
+        String guild = getConfig().getString("guild");
+        dapi = new DAPIWrap(token);
+        dapi.setGuild(guild);
     }
-//    @EventHandler
-//    public void onLogin(PlayerJoinEvent pje)
-//    {
-//        System.out.println(pje.getPlayer().getName() + " joined the server");
-//        dapi.sendMessage(pje.getPlayer().getName() + " joined the server");
-//    }
-//    @EventHandler
-//    public void onDiscordMessage(DiscordMessageEvent e)
-//    {
-//            System.out.println(e.getMsg());
-//    }
+    public DAPIWrap getDAPI()
+    {
+        return dapi;
+    }
+    public static DAPIWrap getDiscordAPI()
+    {
+        return dapi;
+    }
+    public DAPIWrap sendMessage(String message)
+    {
+        dapi.sendMessage(message);
+        return dapi;
+    }
+    public DAPIWrap setGuild(String guild)
+    {
+        dapi.setGuild(guild);
+        return dapi;
+    }
+    public DAPIWrap setChannel(String channel)
+    {
+        dapi.setChannel(channel);
+        return dapi;
+    }
 }

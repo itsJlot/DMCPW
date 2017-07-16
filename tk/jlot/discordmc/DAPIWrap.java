@@ -1,5 +1,6 @@
 package tk.jlot.discordmc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
@@ -20,23 +21,32 @@ public class DAPIWrap
     private PrintStream voidthis,sysOut = System.out,sysErr = System.err;
     private String guild = "175756109431308288";
     private String channel = "general";
-    public void setGuild(String loc)
+    public DAPIWrap setGuild(String loc)
     {
         guild = loc;
+        return this;
     }
-    public void setChannel(String loc)
+    public DAPIWrap setChannel(String loc)
     {
         channel = loc;
+        return this;
     }
-    public void sendMessage(String message)
+    public DAPIWrap sendMessage(String message)
     {
         sendMessage(guild,channel,message);
+        return this;
     }
-    public void status(String status)
+    public DAPIWrap sendMessage(String channel,String message)
+    {
+        sendMessage(guild,channel,message);
+        return this;
+    }
+    public DAPIWrap status(String status)
     {
         this.cli.changePlayingText(status);
+        return this;
     }
-    public void prints(boolean on)
+    public DAPIWrap prints(boolean on)
     {
         if(!on)
         {
@@ -48,8 +58,10 @@ public class DAPIWrap
             System.setOut(sysOut);
             System.setErr(sysErr);
         }
+        return this;
     }
-    public DAPIWrap(String token,boolean listener,PluginManager s)
+
+    public DAPIWrap(String token)
     {
         voidthis = new PrintStream(new OutputStream(){
             public void write(int b)
@@ -79,17 +91,14 @@ public class DAPIWrap
             logout();
             prints(true);
         }
-        if(listener)
-        {
             cli.getDispatcher().registerListener(new IListener<MessageReceivedEvent>() {
                 @Override
                 public void handle(MessageReceivedEvent mre) {
-                    s.callEvent(new DiscordMessageEvent(mre.getGuild().getStringID(),mre.getChannel().getName(),
+                    Bukkit.getServer().getPluginManager().callEvent(new DiscordMessageEvent(mre.getGuild().getStringID(),mre.getChannel().getName(),
                             mre.getAuthor().getName(),mre.getAuthor().getLongID(),mre.getMessage().getContent()));
 //                    System.out.println(mre.getChannel().getName());
                 }
             });
-        }
     }
     public boolean banByID(long id) {
         try {
@@ -105,7 +114,7 @@ public class DAPIWrap
     {
         List<IGuild> guilds = this.cli.getGuilds();
 
-        IGuild guild = null;
+        IGuild guild = cli.getGuilds().get(0);
         for (int i = 0; i < guilds.size(); i++) {
             IGuild g = guilds.get(i);
             System.out.println(i);
@@ -123,7 +132,7 @@ public class DAPIWrap
         }
         return guild;
     }
-    public void sendMessage(String guildID,String chat,String message)
+    public DAPIWrap sendMessage(String guildID,String chat,String message)
     {
 
         prints(false);
@@ -132,9 +141,11 @@ public class DAPIWrap
 
         IChannel c = guild.getChannelsByName(chat).get(0);
         c.sendMessage(message);
+        return this;
     }
-    public void logout()
+    public DAPIWrap logout()
     {
         this.cli.logout();
+        return this;
     }
 }
